@@ -727,7 +727,7 @@ th {
       <div class="section-title">
         <div>
           <h2>4. #Enzian 评分</h2>
-          <p class="hint">P/O/T 与 A/B/C 分为两块；O、T、B、FU 按左/右记录；M=缺失，X=无法评估。再次点击已选值可取消。</p>
+          <p class="hint">P/O/T 与 A/B/C 分为两块；O、T、B、FU 按左/右记录；m=缺失，x=无法评估。再次点击已选值可取消。</p>
         </div>
       </div>
       <div class="enzian-matrix">
@@ -829,20 +829,20 @@ const dpeiExtras = [
 ];
 
 const singleEnzian = {
-  P: ["P 腹膜", ["0", "1", "2", "3", "M", "X"]],
-  A: ["A 阴道/直肠阴道隔/宫颈后方", ["0", "1", "2", "3", "M", "X"]],
-  C: ["C 直肠/乙状结肠", ["0", "1", "2", "3", "M", "X"]],
+  P: ["P 腹膜", ["0", "1", "2", "3", "m", "x"]],
+  A: ["A 阴道/直肠阴道隔/宫颈后方", ["0", "1", "2", "3", "m", "x"]],
+  C: ["C 直肠/乙状结肠", ["0", "1", "2", "3", "m", "x"]],
 };
 
 const pairedEnzian = {
-  O: ["O 卵巢", ["0", "1", "2", "3", "M", "X"]],
-  T: ["T 输卵管-卵巢单元/粘连", ["0", "1", "2", "3", "M", "X"]],
-  B: ["B 宫骶韧带/主韧带/盆侧壁", ["0", "1", "2", "3", "M", "X"]],
+  O: ["O 卵巢", ["0", "1", "2", "3", "m", "x"]],
+  T: ["T 输卵管-卵巢单元/粘连", ["0", "1", "2", "3", "m", "x"]],
+  B: ["B 宫骶韧带/主韧带/盆侧壁", ["0", "1", "2", "3", "m", "x"]],
 };
 
 const enzianOrder = ["P", "O", "T", "A", "B", "C"];
-const valueSetMain = ["0", "1", "2", "3", "M", "X"];
-const valueSetBinary = ["0", "1", "M", "X"];
+const valueSetMain = ["0", "1", "2", "3", "m", "x"];
+const valueSetBinary = ["0", "1", "m", "x"];
 
 const commonF = [
   ["FA", "子宫腺肌症", "single"],
@@ -955,14 +955,15 @@ function currentKey() {
 }
 
 function valueClass(value) {
-  if (value === "M") return "missing";
-  if (value === "X") return "unknown";
+  if (value === "m" || value === "M") return "missing";
+  if (value === "x" || value === "X") return "unknown";
   if (value !== "0") return "positive";
   return "zero";
 }
 
 function setValueButton(container, values, current, confirmed, onChange, compact = false) {
   container.innerHTML = "";
+  const normalizedCurrent = normalizeScoreValue(current);
   values.forEach((value) => {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -970,12 +971,12 @@ function setValueButton(container, values, current, confirmed, onChange, compact
     btn.className = [
       "choice",
       valueClass(value),
-      current === value && confirmed ? "active" : "",
-      value === "0" && current === value && confirmed ? "confirmed-zero" : "",
+      normalizedCurrent === value && confirmed ? "active" : "",
+      value === "0" && normalizedCurrent === value && confirmed ? "confirmed-zero" : "",
       compact ? "compact" : "",
     ].filter(Boolean).join(" ");
     btn.addEventListener("click", () => {
-      if (current === value && confirmed) onChange("0", false);
+      if (normalizedCurrent === value && confirmed) onChange("0", false);
       else onChange(value, true);
     });
     container.appendChild(btn);
@@ -1180,20 +1181,28 @@ function handleAddFPreset() {
 }
 
 function formatSingle(code, value) {
+  value = normalizeScoreValue(value);
   return value === "0" ? "" : `${code}${value}`;
 }
 
 function formatPaired(code, value) {
-  const left = value.left || "0";
-  const right = value.right || "0";
+  const left = normalizeScoreValue(value.left || "0");
+  const right = normalizeScoreValue(value.right || "0");
   return left === "0" && right === "0" ? "" : `${code}${left}/${right}`;
 }
 
 function formatF(item) {
   if (item.mode === "paired") return formatPaired(item.code, item);
-  if (item.value === "0") return "";
-  if (item.value === "1") return item.code;
-  return `${item.code}${item.value}`;
+  const value = normalizeScoreValue(item.value);
+  if (value === "0") return "";
+  if (value === "1") return item.code;
+  return `${item.code}${value}`;
+}
+
+function normalizeScoreValue(value) {
+  if (value === "M") return "m";
+  if (value === "X") return "x";
+  return value || "0";
 }
 
 function standardEnzian(recordLike = state) {
@@ -1213,7 +1222,9 @@ function standardEnzian(recordLike = state) {
 
 function customFSummary(recordLike = state) {
   return recordLike.customF.map((item) => {
-    const value = item.mode === "paired" ? `${item.left}/${item.right}` : item.value;
+    const value = item.mode === "paired"
+      ? `${normalizeScoreValue(item.left)}/${normalizeScoreValue(item.right)}`
+      : normalizeScoreValue(item.value);
     return `${item.code}:${item.name}=${value}`;
   }).join("; ");
 }
