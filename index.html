@@ -1,3 +1,1403 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="application-name" content="DIE MRI dPEI-#Enzian 评分器" />
+  <link rel="icon" type="image/png" href="data:image/png;base64,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" />
+  <title>DIE MRI dPEI-#Enzian 评分器</title>
+  <style>
+:root {
+  --blue: #1f4e79;
+  --blue-2: #2f75b5;
+  --blue-soft: #eaf3fb;
+  --blue-pale: #f6fafe;
+  --green: #2e7d32;
+  --green-soft: #e7f4e8;
+  --orange: #b45309;
+  --orange-soft: #fff3d6;
+  --purple: #6b46a3;
+  --purple-soft: #f0e9ff;
+  --red: #b42318;
+  --red-soft: #fff1f0;
+  --border: #d7dee8;
+  --border-strong: #b9c8d8;
+  --text: #17202a;
+  --muted: #667085;
+  --surface: #ffffff;
+  --bg: #f4f7fb;
+  --shadow: 0 8px 22px rgba(31, 78, 121, .06);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1, h2, h3, p { margin: 0; }
+h1 { color: var(--blue); font-size: clamp(1.3rem, 3vw, 1.9rem); letter-spacing: .01em; }
+h2 { color: var(--blue); font-size: 1.12rem; }
+h3 { color: var(--blue); font-size: 1rem; }
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem clamp(1rem, 3vw, 2rem);
+  background: rgba(255, 255, 255, .96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+.header-copy p,
+.hint,
+.case-extra {
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.5;
+  margin-top: .2rem;
+}
+
+.header-actions,
+.queue-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header-check {
+  display: inline-flex;
+  grid-template-columns: auto;
+  align-items: center;
+  gap: .35rem;
+  padding: .45rem .65rem;
+  border: 1px solid var(--border);
+  border-radius: .65rem;
+  background: var(--blue-pale);
+  font-size: .9rem;
+  white-space: nowrap;
+}
+
+.header-check input {
+  width: auto;
+  margin: 0;
+}
+
+button {
+  border: 1px solid var(--border);
+  border-radius: .65rem;
+  background: #fff;
+  color: var(--blue);
+  font-weight: 750;
+  padding: .65rem .9rem;
+  min-height: 42px;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .08s ease;
+}
+
+button:hover { border-color: var(--blue-2); }
+button:active { transform: translateY(1px); }
+button.primary { background: var(--blue); color: white; border-color: var(--blue); }
+button.ghost { color: #475467; background: #f8fafc; }
+button.danger {
+  color: var(--red);
+  border-color: #fecdca;
+  background: var(--red-soft);
+  padding: .35rem .55rem;
+  min-height: 32px;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #9cc2e5;
+  outline-offset: 2px;
+}
+
+.layout {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 3vw, 2rem) 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .9rem;
+}
+
+label {
+  display: grid;
+  gap: .35rem;
+  font-weight: 700;
+  color: #344054;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: .6rem;
+  padding: .7rem .75rem;
+  font: inherit;
+  background: white;
+}
+
+textarea { resize: vertical; }
+
+.queue-grid {
+  display: grid;
+  grid-template-columns: 180px minmax(260px, 1fr) auto;
+  gap: .75rem;
+  align-items: end;
+}
+
+.case-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: .85rem;
+}
+
+.case-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: 36px;
+  padding: .35rem .6rem;
+  font-size: .9rem;
+}
+
+.case-chip small {
+  border-radius: 999px;
+  padding: .12rem .38rem;
+  font-size: .75rem;
+  font-weight: 800;
+}
+
+.case-chip.todo {
+  background: #f8fafc;
+  color: #475467;
+  border-color: #e4e7ec;
+}
+
+.case-chip.todo small {
+  background: #eef2f6;
+  color: #667085;
+}
+
+.case-chip.done {
+  background: var(--green-soft);
+  color: var(--green);
+  border-color: #a6d7aa;
+}
+
+.case-chip.done small {
+  background: #cfead2;
+  color: #1f6f2b;
+}
+
+.case-chip.draft {
+  background: #fff8e8;
+  color: var(--orange);
+  border-color: #f5d28a;
+}
+
+.case-chip.draft small {
+  background: var(--orange-soft);
+  color: var(--orange);
+}
+
+.case-chip.current {
+  border: 2px solid var(--blue);
+  box-shadow: 0 0 0 3px rgba(47, 117, 181, .12);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: .25rem .6rem;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.pill.neutral {
+  background: #eef2f6;
+  color: #475467;
+}
+
+.score-card {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background: var(--blue-pale);
+  border: 1px solid var(--border);
+  border-radius: .75rem;
+  padding: .45rem .75rem;
+}
+
+.score-card strong {
+  color: var(--blue);
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.dpei-area {
+  display: grid;
+  grid-template-columns: minmax(280px, 460px) 1fr;
+  gap: 1rem;
+}
+
+.grid9 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+}
+
+.tile {
+  min-height: 86px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background: var(--blue-pale);
+  border-color: #cfe0ef;
+  color: #315f82;
+  font-weight: 850;
+}
+
+.tile small {
+  display: block;
+  margin-top: .2rem;
+  font-weight: 650;
+  color: #6b8195;
+  font-size: .72rem;
+}
+
+.tile.active {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+}
+
+.tile.active small { color: rgba(255, 255, 255, .85); }
+
+.extra-list {
+  display: grid;
+  gap: .6rem;
+  align-content: start;
+}
+
+.extra-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  background: #f8fafc;
+  color: #475467;
+}
+
+.extra-button.active {
+  background: #dceef8;
+  color: var(--blue);
+  border-color: #8bbce0;
+}
+
+.extra-button.active strong {
+  color: #0f5d8f;
+}
+
+.enzian-matrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .85rem;
+}
+
+.enzian-group {
+  border: 1px solid #cbd9e8;
+  border-radius: .9rem;
+  background: #fbfdff;
+  padding: .75rem;
+}
+
+.group-heading {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: .65rem;
+  padding: .25rem .6rem;
+  border-radius: 999px;
+  background: var(--blue);
+  color: white;
+  font-weight: 850;
+  letter-spacing: .02em;
+}
+
+.enzian-stack {
+  display: grid;
+  gap: .65rem;
+}
+
+.enzian-item,
+.f-card,
+.standard-box {
+  border: 1px solid var(--border);
+  border-radius: .8rem;
+  padding: .72rem;
+  background: #fff;
+}
+
+.enzian-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .55rem;
+  font-weight: 850;
+  color: var(--blue);
+}
+
+.segmented {
+  display: grid;
+  gap: .35rem;
+}
+
+.segmented.six { grid-template-columns: repeat(6, 1fr); }
+.segmented.four { grid-template-columns: repeat(4, 1fr); }
+
+.choice {
+  min-height: 38px;
+  padding: .48rem .55rem;
+  background: #f8fbfd;
+  border-color: #d8e4ef;
+  color: #42627f;
+}
+
+.choice.positive { background: #edf6ff; color: var(--blue); }
+.choice.missing { background: var(--orange-soft); color: var(--orange); border-color: #f5d28a; }
+.choice.unknown { background: var(--purple-soft); color: var(--purple); border-color: #d7c4ff; }
+
+.choice.active {
+  color: white;
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.choice.confirmed-zero.active {
+  color: white;
+  border-color: var(--green);
+  background: var(--green);
+}
+
+.choice.missing.active {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+.choice.unknown.active {
+  background: var(--purple);
+  border-color: var(--purple);
+}
+
+.choice.compact {
+  min-height: 34px;
+  padding: .38rem .45rem;
+}
+
+.side-row {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: .4rem;
+  align-items: center;
+  margin-bottom: .45rem;
+}
+
+.side-row:last-child { margin-bottom: 0; }
+.side-row strong { color: #475467; }
+
+.standard-box {
+  margin-top: .85rem;
+  background: var(--blue-pale);
+  display: grid;
+  gap: .35rem;
+}
+
+.enzian-bottom-row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, .9fr);
+  gap: .85rem;
+  align-items: stretch;
+  margin-top: .85rem;
+}
+
+.f-in-enzian {
+  border: 1px solid var(--border);
+  border-radius: .9rem;
+  padding: .8rem;
+  background: #fbfdff;
+}
+
+.subsection-title {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  align-items: baseline;
+  margin-bottom: .65rem;
+}
+
+.note-notch {
+  align-self: stretch;
+  border: 1px solid #cbd9e8;
+  border-left: 6px solid var(--blue);
+  border-radius: .9rem;
+  padding: .8rem;
+  background: #ffffff;
+  box-shadow: inset 10px 0 0 rgba(31, 78, 121, .03);
+}
+
+code {
+  color: var(--blue);
+  font-weight: 850;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.f-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: .55rem;
+}
+
+.f-card {
+  background: #fff;
+}
+
+.f-card.custom {
+  border-color: #b8d5ec;
+  background: #fbfdff;
+}
+
+.add-f-row {
+  display: grid;
+  gap: .55rem;
+  margin-top: .65rem;
+}
+
+.custom-f-controls {
+  display: grid;
+  grid-template-columns: 110px 1fr 120px auto;
+  gap: .5rem;
+}
+
+.custom-f-controls[hidden] {
+  display: none;
+}
+
+.total-note textarea {
+  min-height: 76px;
+}
+
+.finish-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+  margin-top: .75rem;
+  text-align: center;
+}
+
+.large-action {
+  min-height: 64px;
+  min-width: min(100%, 360px);
+  padding-inline: 2rem;
+  font-size: 1.22rem;
+  border-radius: .9rem;
+  box-shadow: 0 10px 24px rgba(31, 78, 121, .18);
+}
+
+.shortcut-hint {
+  color: var(--muted);
+  font-size: .88rem;
+  line-height: 1.45;
+}
+
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .92rem;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--border);
+  padding: .65rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: var(--blue);
+  background: var(--blue-pale);
+  white-space: nowrap;
+}
+
+.saved-row {
+  background: #fbfffb;
+}
+
+.status-done {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: .18rem .55rem;
+  background: var(--green-soft);
+  color: var(--green);
+  font-weight: 850;
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 1.2rem;
+}
+
+@media (max-width: 1080px) {
+  .f-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 860px) {
+  .app-header {
+    position: static;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .header-actions,
+  .queue-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .header-actions button,
+  .queue-actions button {
+    flex: 1 1 42%;
+  }
+
+  .header-check {
+    width: 100%;
+  }
+
+  .queue-grid,
+  .dpei-area,
+  .enzian-matrix,
+  .enzian-bottom-row,
+  .custom-f-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .f-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .segmented.six {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tile {
+    min-height: 74px;
+  }
+
+  .subsection-title {
+    display: grid;
+  }
+}
+
+@media (max-width: 520px) {
+  .layout { padding-inline: .75rem; }
+  .panel { padding: .85rem; border-radius: .8rem; }
+  .section-title { align-items: flex-start; flex-direction: column; }
+  .f-strip { grid-template-columns: 1fr; }
+  .large-action { min-width: 100%; }
+  .grid9 { gap: .4rem; }
+  .tile { min-height: 66px; padding-inline: .35rem; }
+  .tile small { display: none; }
+}
+
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-copy">
+      <h1>DIE MRI dPEI-#Enzian 评分器</h1>
+      <p>粘贴病例 ID → 连续评分 → 保存 → 一键复制到 Excel。dPEI 与 #Enzian 均按阅片流程快速点选。</p>
+    </div>
+    <div class="header-actions">
+      <label class="header-check">
+        <input id="includeHeader" type="checkbox" />
+        复制时包含表头
+      </label>
+      <button id="copyCurrentBtn" class="primary">复制本例</button>
+      <button id="copyScoredBtn">复制本次已评分</button>
+      <button id="saveBtn">保存本例</button>
+      <button id="resetBtn" class="ghost">清空本例</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <div class="section-title">
+        <h2>1. 本次病例队列</h2>
+        <span id="progressText" class="pill">0/0 已评分</span>
+      </div>
+      <div class="queue-grid">
+        <label>
+          阅片者
+          <select id="readerSelect">
+            <option value="H">H 高级医师</option>
+            <option value="M">M 中级医师</option>
+            <option value="L">L 初级医师</option>
+          </select>
+        </label>
+        <label class="queue-input">
+          从 Excel 粘贴患者 ID 或多列病例信息
+          <textarea id="pasteBox" rows="4" placeholder="100001&#10;100002&#10;或从 Excel 复制多列：患者ID	检查号	附加说明"></textarea>
+        </label>
+        <div class="queue-actions">
+          <button id="loadQueueBtn" class="primary">生成队列</button>
+          <button id="prevBtn">上一例</button>
+          <button id="nextBtn">下一例</button>
+        </div>
+      </div>
+      <div id="caseList" class="case-list" aria-label="病例队列"></div>
+    </section>
+
+    <section class="panel current-panel">
+      <div class="section-title">
+        <h2>2. 当前病例</h2>
+        <span id="currentCaseText" class="pill neutral">未选择</span>
+      </div>
+      <div id="caseExtraText" class="case-extra">请先粘贴病例 ID 并生成队列。</div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>3. dPEI：九宫格 + 附加危险因素</h2>
+        <div class="score-card">
+          <span>dPEI 总分</span>
+          <strong id="dpeiTotal">0</strong>
+          <span id="dpeiGrade">轻度</span>
+        </div>
+      </div>
+      <div class="dpei-area">
+        <div id="dpeiGrid" class="grid9" aria-label="dPEI 九宫格"></div>
+        <div id="dpeiExtras" class="extra-list" aria-label="dPEI 附加危险因素"></div>
+      </div>
+    </section>
+
+    <section class="panel enzian-panel">
+      <div class="section-title">
+        <div>
+          <h2>4. #Enzian 评分</h2>
+          <p class="hint">P/O/T 与 A/B/C 分为两块；O、T、B、FU 按左/右记录；M=缺失，X=无法评估。再次点击已选值可取消。</p>
+        </div>
+      </div>
+      <div class="enzian-matrix">
+        <div class="enzian-group">
+          <div class="group-heading">P / O / T</div>
+          <div id="enzianLeft" class="enzian-stack"></div>
+        </div>
+        <div class="enzian-group">
+          <div class="group-heading">A / B / C</div>
+          <div id="enzianRight" class="enzian-stack"></div>
+        </div>
+      </div>
+      <div class="standard-box">
+        <strong>标准输出</strong>
+        <code id="standardOutput">未见明显异常</code>
+      </div>
+
+      <div class="enzian-bottom-row">
+        <div class="f-in-enzian">
+          <div class="subsection-title">
+            <h3>F 类</h3>
+            <p class="hint">只常驻 FA / FB / FI / FU；FW–FN 或自定义 F 类从下拉框添加。</p>
+          </div>
+          <div id="fGrid" class="f-strip" aria-label="F 类部位"></div>
+          <div class="add-f-row">
+            <select id="addFPreset" aria-label="添加 F 类部位">
+              <option value="">+ 添加 F 类部位</option>
+              <option value="FW">FW 腹壁/切口/瘢痕</option>
+              <option value="FG">FG 腹股沟/圆韧带区域</option>
+              <option value="FD">FD 膈肌</option>
+              <option value="FL">FL 肺/胸腔</option>
+              <option value="FN">FN 神经受累</option>
+              <option value="CUSTOM">自定义 F 类部位</option>
+            </select>
+            <div id="customFControls" class="custom-f-controls" hidden>
+              <input id="customFCode" placeholder="F代码，如 FS" />
+              <input id="customFName" placeholder="部位名称，如 骶前神经旁" />
+              <select id="customFPaired">
+                <option value="single">单项</option>
+                <option value="paired">左/右配对</option>
+              </select>
+              <button id="addCustomFBtn" type="button">添加</button>
+            </div>
+          </div>
+        </div>
+        <label class="total-note note-notch">
+          总备注
+          <textarea id="totalNote" rows="2" placeholder="特殊情况、图像质量、缺失原因、自定义 F 类说明等。"></textarea>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel save-panel">
+      <div class="finish-actions">
+        <button id="saveNextBtn" class="primary large-action">保存并下一例</button>
+        <span class="shortcut-hint">快捷键：Ctrl+S 仅保存；Ctrl+Enter 或鼠标中键 保存并下一例；Alt+←/→ 切换病例</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>5. 本次已评分</h2>
+        <span id="savedCount" class="pill">0 条</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>患者 ID</th>
+              <th>阅片者</th>
+              <th>dPEI</th>
+              <th>#Enzian 标准输出</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script>
+const dpeiRegions = [
+  ["dPEI_AL_L", "左前外侧"],
+  ["dPEI_AC", "前中央"],
+  ["dPEI_AL_R", "右前外侧"],
+  ["dPEI_ML_L", "左中外侧"],
+  ["dPEI_MC", "中中央"],
+  ["dPEI_ML_R", "右中外侧"],
+  ["dPEI_PL_L", "左后外侧"],
+  ["dPEI_PC", "后中央"],
+  ["dPEI_PL_R", "右后外侧"],
+];
+
+const dpeiExtras = [
+  ["dPEI_pelvic_wall", "盆壁/侧方受累"],
+  ["dPEI_extrapelvic", "盆腔外病灶"],
+  ["dPEI_vagina_trigone_ureter", "阴道/膀胱三角/输尿管扩张任一存在"],
+];
+
+const singleEnzian = {
+  P: ["P 腹膜", ["0", "1", "2", "3", "M", "X"]],
+  A: ["A 阴道/直肠阴道隔/宫颈后方", ["0", "1", "2", "3", "M", "X"]],
+  C: ["C 直肠/乙状结肠", ["0", "1", "2", "3", "M", "X"]],
+};
+
+const pairedEnzian = {
+  O: ["O 卵巢", ["0", "1", "2", "3", "M", "X"]],
+  T: ["T 输卵管-卵巢单元/粘连", ["0", "1", "2", "3", "M", "X"]],
+  B: ["B 宫骶韧带/主韧带/盆侧壁", ["0", "1", "2", "3", "M", "X"]],
+};
+
+const enzianOrder = ["P", "O", "T", "A", "B", "C"];
+const valueSetMain = ["0", "1", "2", "3", "M", "X"];
+const valueSetBinary = ["0", "1", "M", "X"];
+
+const commonF = [
+  ["FA", "子宫腺肌症", "single"],
+  ["FB", "膀胱", "single"],
+  ["FI", "肠道，C区以上", "single"],
+  ["FU", "输尿管", "paired"],
+];
+
+const addableFPresets = [
+  ["FW", "腹壁/切口/瘢痕", "single"],
+  ["FG", "腹股沟/圆韧带区域", "single"],
+  ["FD", "膈肌", "single"],
+  ["FL", "肺/胸腔", "single"],
+  ["FN", "神经受累", "single"],
+];
+
+const outputF = ["FA", "FB", "FI", "FU"];
+const NORMAL_ENZIAN_TEXT = "未见明显异常";
+const $ = (id) => document.getElementById(id);
+
+const state = {
+  queue: [],
+  currentIndex: -1,
+  records: new Map(),
+  drafts: new Map(),
+  dpei: {},
+  enzianSingle: {},
+  enzianPaired: {},
+  enzianSingleConfirmed: {},
+  enzianPairedConfirmed: {},
+  fItems: {},
+  customF: [],
+  totalNote: "",
+};
+
+function makeFItem(code, name, mode) {
+  return mode === "paired"
+    ? { code, name, mode, left: "0", right: "0", leftConfirmed: false, rightConfirmed: false }
+    : { code, name, mode, value: "0", confirmed: false };
+}
+
+function emptyFormState() {
+  state.dpei = Object.fromEntries([...dpeiRegions, ...dpeiExtras].map(([key]) => [key, 0]));
+  state.enzianSingle = Object.fromEntries(Object.keys(singleEnzian).map((key) => [key, "0"]));
+  state.enzianPaired = Object.fromEntries(Object.keys(pairedEnzian).map((key) => [key, { left: "0", right: "0" }]));
+  state.enzianSingleConfirmed = Object.fromEntries(Object.keys(singleEnzian).map((key) => [key, false]));
+  state.enzianPairedConfirmed = Object.fromEntries(Object.keys(pairedEnzian).map((key) => [key, { left: false, right: false }]));
+  state.fItems = Object.fromEntries(commonF.map(([code, name, mode]) => [code, makeFItem(code, name, mode)]));
+  state.customF = [];
+  state.totalNote = "";
+}
+
+emptyFormState();
+
+function clone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function dpeiTotal() {
+  return dpeiRegions.reduce((sum, [key]) => sum + Number(state.dpei[key] || 0), 0);
+}
+
+function dpeiGrade(total) {
+  if (total <= 2) return "轻度";
+  if (total <= 4) return "中度";
+  return "重度";
+}
+
+function parseQueueText(text) {
+  return text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line, index) => {
+      const parts = line.includes("\t")
+        ? line.split("\t")
+        : line.includes(",")
+          ? line.split(",")
+          : line.split(/\s+/);
+      return {
+        id: `${parts[0].trim()}__${index + 1}`,
+        patientId: parts[0].trim(),
+        extras: parts.slice(1).map((part) => part.trim()).filter(Boolean),
+      };
+    })
+    .filter((item) => item.patientId);
+}
+
+function loadQueue() {
+  const items = parseQueueText($("pasteBox").value);
+  if (!items.length) {
+    alert("请先粘贴至少一个患者 ID。");
+    return;
+  }
+  state.queue = items;
+  state.currentIndex = 0;
+  state.records.clear();
+  state.drafts.clear();
+  emptyFormState();
+  renderAll();
+}
+
+function currentCase() {
+  return state.queue[state.currentIndex] || null;
+}
+
+function currentKey() {
+  const item = currentCase();
+  return item ? `${item.id}__${$("readerSelect").value}` : "";
+}
+
+function valueClass(value) {
+  if (value === "M") return "missing";
+  if (value === "X") return "unknown";
+  if (value !== "0") return "positive";
+  return "zero";
+}
+
+function setValueButton(container, values, current, confirmed, onChange, compact = false) {
+  container.innerHTML = "";
+  values.forEach((value) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = value;
+    btn.className = [
+      "choice",
+      valueClass(value),
+      current === value && confirmed ? "active" : "",
+      value === "0" && current === value && confirmed ? "confirmed-zero" : "",
+      compact ? "compact" : "",
+    ].filter(Boolean).join(" ");
+    btn.addEventListener("click", () => {
+      if (current === value && confirmed) onChange("0", false);
+      else onChange(value, true);
+    });
+    container.appendChild(btn);
+  });
+}
+
+function renderDpei() {
+  const grid = $("dpeiGrid");
+  grid.innerHTML = "";
+  dpeiRegions.forEach(([key, label]) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `tile ${state.dpei[key] ? "active" : ""}`;
+    btn.innerHTML = `<span>${label}</span><small>${key}</small>`;
+    btn.addEventListener("click", () => {
+      state.dpei[key] = state.dpei[key] ? 0 : 1;
+      renderDpei();
+      updateDpeiScore();
+    });
+    grid.appendChild(btn);
+  });
+
+  const extras = $("dpeiExtras");
+  extras.innerHTML = "";
+  dpeiExtras.forEach(([key, label]) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = `extra-button ${state.dpei[key] ? "active" : ""}`;
+    btn.innerHTML = `<span>${label}</span><strong>${state.dpei[key] ? "1 有" : "0 无"}</strong>`;
+    btn.addEventListener("click", () => {
+      state.dpei[key] = state.dpei[key] ? 0 : 1;
+      renderDpei();
+    });
+    extras.appendChild(btn);
+  });
+}
+
+function updateDpeiScore() {
+  const total = dpeiTotal();
+  $("dpeiTotal").textContent = String(total);
+  $("dpeiGrade").textContent = dpeiGrade(total);
+}
+
+function renderEnzian() {
+  renderEnzianColumn("enzianLeft", ["P", "O", "T"]);
+  renderEnzianColumn("enzianRight", ["A", "B", "C"]);
+  renderStandard();
+}
+
+function renderEnzianColumn(rootId, codes) {
+  const root = $(rootId);
+  root.innerHTML = "";
+  codes.forEach((code) => {
+    const item = document.createElement("div");
+    item.className = `enzian-item enzian-${code}`;
+    if (singleEnzian[code]) {
+      const [label, values] = singleEnzian[code];
+      item.innerHTML = `
+        <div class="enzian-title"><span>${label}</span><span>${code}</span></div>
+        <div class="segmented six" data-seg="${code}"></div>
+      `;
+      root.appendChild(item);
+      setValueButton(item.querySelector("[data-seg]"), values, state.enzianSingle[code], state.enzianSingleConfirmed[code], (value, confirmed) => {
+        state.enzianSingle[code] = value;
+        state.enzianSingleConfirmed[code] = confirmed;
+        renderEnzian();
+      });
+      return;
+    }
+
+    const [label, values] = pairedEnzian[code];
+    item.innerHTML = `
+      <div class="enzian-title"><span>${label}</span><span>${code} 左/右</span></div>
+      <div class="side-row"><strong>左</strong><div class="segmented six" data-left="${code}"></div></div>
+      <div class="side-row"><strong>右</strong><div class="segmented six" data-right="${code}"></div></div>
+    `;
+    root.appendChild(item);
+    setValueButton(item.querySelector("[data-left]"), values, state.enzianPaired[code].left, state.enzianPairedConfirmed[code].left, (value, confirmed) => {
+      state.enzianPaired[code].left = value;
+      state.enzianPairedConfirmed[code].left = confirmed;
+      renderEnzian();
+    });
+    setValueButton(item.querySelector("[data-right]"), values, state.enzianPaired[code].right, state.enzianPairedConfirmed[code].right, (value, confirmed) => {
+      state.enzianPaired[code].right = value;
+      state.enzianPairedConfirmed[code].right = confirmed;
+      renderEnzian();
+    });
+  });
+}
+
+function renderFItems() {
+  const root = $("fGrid");
+  root.innerHTML = "";
+  Object.values(state.fItems).forEach((item) => root.appendChild(renderFCard(item, false)));
+  state.customF.forEach((item) => root.appendChild(renderFCard(item, true)));
+}
+
+function renderFCard(item, isCustom) {
+  const card = document.createElement("div");
+  card.className = `f-card ${isCustom ? "custom" : ""}`;
+  const controls = item.mode === "paired"
+    ? `
+      <div class="side-row f-side"><strong>左</strong><div class="segmented four" data-f-left="${item.code}"></div></div>
+      <div class="side-row f-side"><strong>右</strong><div class="segmented four" data-f-right="${item.code}"></div></div>
+    `
+    : `<div class="segmented four" data-f-value="${item.code}"></div>`;
+
+  card.innerHTML = `
+    <div class="enzian-title">
+      <span>${item.code} ${escapeHtml(item.name)}</span>
+      ${isCustom ? `<button type="button" class="danger" data-delete-f="${item.code}">删除</button>` : ""}
+    </div>
+    ${controls}
+  `;
+
+  if (item.mode === "paired") {
+    setValueButton(card.querySelector("[data-f-left]"), valueSetBinary, item.left, item.leftConfirmed, (value, confirmed) => {
+      item.left = value;
+      item.leftConfirmed = confirmed;
+      renderFItems();
+      renderStandard();
+    }, true);
+    setValueButton(card.querySelector("[data-f-right]"), valueSetBinary, item.right, item.rightConfirmed, (value, confirmed) => {
+      item.right = value;
+      item.rightConfirmed = confirmed;
+      renderFItems();
+      renderStandard();
+    }, true);
+  } else {
+    setValueButton(card.querySelector("[data-f-value]"), valueSetBinary, item.value, item.confirmed, (value, confirmed) => {
+      item.value = value;
+      item.confirmed = confirmed;
+      renderFItems();
+      renderStandard();
+    }, true);
+  }
+
+  const del = card.querySelector("[data-delete-f]");
+  if (del) {
+    del.addEventListener("click", () => {
+      state.customF = state.customF.filter((x) => x.code !== item.code);
+      renderFItems();
+      renderStandard();
+    });
+  }
+  return card;
+}
+
+function addCustomF() {
+  const code = $("customFCode").value.trim().toUpperCase();
+  const name = $("customFName").value.trim();
+  const mode = $("customFPaired").value;
+  if (!/^F[A-Z0-9]{1,3}$/.test(code)) {
+    alert("F 代码需以 F 开头，例如 FS、FW、FD。");
+    return;
+  }
+  if (!name) {
+    alert("请填写部位名称。");
+    return;
+  }
+  if (state.fItems[code] || state.customF.some((item) => item.code === code)) {
+    alert("该 F 代码已存在。");
+    return;
+  }
+  state.customF.push(makeFItem(code, name, mode));
+  $("customFCode").value = "";
+  $("customFName").value = "";
+  $("addFPreset").value = "";
+  $("customFControls").hidden = true;
+  renderFItems();
+  renderStandard();
+}
+
+function addPresetF(code) {
+  const preset = addableFPresets.find(([presetCode]) => presetCode === code);
+  if (!preset) return;
+  const [presetCode, name, mode] = preset;
+  if (state.fItems[presetCode] || state.customF.some((item) => item.code === presetCode)) {
+    alert("该 F 类部位已添加。");
+    $("addFPreset").value = "";
+    return;
+  }
+  state.customF.push(makeFItem(presetCode, name, mode));
+  $("addFPreset").value = "";
+  $("customFControls").hidden = true;
+  renderFItems();
+  renderStandard();
+}
+
+function handleAddFPreset() {
+  const value = $("addFPreset").value;
+  if (!value) {
+    $("customFControls").hidden = true;
+    return;
+  }
+  if (value === "CUSTOM") {
+    $("customFControls").hidden = false;
+    $("customFCode").focus();
+    return;
+  }
+  addPresetF(value);
+}
+
+function formatSingle(code, value) {
+  return value === "0" ? "" : `${code}${value}`;
+}
+
+function formatPaired(code, value) {
+  const left = value.left || "0";
+  const right = value.right || "0";
+  return left === "0" && right === "0" ? "" : `${code}${left}/${right}`;
+}
+
+function formatF(item) {
+  if (item.mode === "paired") return formatPaired(item.code, item);
+  if (item.value === "0") return "";
+  if (item.value === "1") return item.code;
+  return `${item.code}${item.value}`;
+}
+
+function standardEnzian(recordLike = state) {
+  const parts = [];
+  enzianOrder.forEach((code) => {
+    const output = recordLike.enzianPaired[code]
+      ? formatPaired(code, recordLike.enzianPaired[code])
+      : formatSingle(code, recordLike.enzianSingle[code]);
+    if (output) parts.push(output);
+  });
+  [...Object.values(recordLike.fItems), ...recordLike.customF].forEach((item) => {
+    const output = formatF(item);
+    if (output) parts.push(output);
+  });
+  return parts.length ? `#ENZIAN: ${parts.join(", ")}` : NORMAL_ENZIAN_TEXT;
+}
+
+function customFSummary(recordLike = state) {
+  return recordLike.customF.map((item) => {
+    const value = item.mode === "paired" ? `${item.left}/${item.right}` : item.value;
+    return `${item.code}:${item.name}=${value}`;
+  }).join("; ");
+}
+
+function renderStandard() {
+  $("standardOutput").textContent = standardEnzian();
+}
+
+function captureNote() {
+  state.totalNote = $("totalNote").value.trim();
+}
+
+function currentRecord() {
+  const item = currentCase();
+  if (!item) {
+    alert("请先生成病例队列。");
+    return null;
+  }
+  const reader = $("readerSelect").value;
+  const total = dpeiTotal();
+  return {
+    key: currentKey(),
+    patientId: item.patientId,
+    caseExtras: item.extras,
+    reader,
+    dpeiTotal: total,
+    dpeiGrade: dpeiGrade(total),
+    standardEnzian: standardEnzian(),
+    customF: customFSummary(),
+    totalNote: state.totalNote,
+    dpei: clone(state.dpei),
+    enzianSingle: clone(state.enzianSingle),
+    enzianPaired: clone(state.enzianPaired),
+    enzianSingleConfirmed: clone(state.enzianSingleConfirmed),
+    enzianPairedConfirmed: clone(state.enzianPairedConfirmed),
+    fItems: clone(state.fItems),
+    customFItems: clone(state.customF),
+  };
+}
+
+function saveCurrent() {
+  captureNote();
+  const record = currentRecord();
+  if (!record) return null;
+  state.records.set(record.key, record);
+  state.drafts.delete(record.key);
+  renderQueue();
+  renderRecords();
+  return record;
+}
+
+function stashDraft() {
+  if (!currentCase()) return;
+  captureNote();
+  const record = currentRecord();
+  if (!record) return;
+  if (state.records.has(record.key)) return;
+  state.drafts.set(record.key, record);
+}
+
+function saveCurrentAndNext() {
+  const record = saveCurrent();
+  if (!record) return;
+  if (state.currentIndex < state.queue.length - 1) {
+    state.currentIndex += 1;
+    loadCurrentIfSaved();
+    renderAll();
+  } else {
+    alert("已保存，当前已经是最后一例。");
+    renderAll();
+  }
+}
+
+function loadRecord(record) {
+  state.dpei = clone(record.dpei);
+  state.enzianSingle = clone(record.enzianSingle);
+  state.enzianPaired = clone(record.enzianPaired);
+  state.enzianSingleConfirmed = clone(record.enzianSingleConfirmed || Object.fromEntries(Object.keys(singleEnzian).map((key) => [key, false])));
+  state.enzianPairedConfirmed = clone(record.enzianPairedConfirmed || Object.fromEntries(Object.keys(pairedEnzian).map((key) => [key, { left: false, right: false }])));
+  state.fItems = clone(record.fItems);
+  state.customF = clone(record.customFItems);
+  state.totalNote = record.totalNote || "";
+  $("totalNote").value = state.totalNote;
+  renderScoring();
+}
+
+function resetCurrentForm(render = true) {
+  emptyFormState();
+  $("totalNote").value = "";
+  if (render) renderScoring();
+}
+
+function loadCurrentIfSaved() {
+  const saved = state.records.get(currentKey());
+  const draft = state.drafts.get(currentKey());
+  if (saved) loadRecord(saved);
+  else if (draft) loadRecord(draft);
+  else resetCurrentForm(false);
+}
+
+function go(delta) {
+  if (!state.queue.length) return;
+  stashDraft();
+  state.currentIndex = Math.max(0, Math.min(state.queue.length - 1, state.currentIndex + delta));
+  loadCurrentIfSaved();
+  renderAll();
+}
+
+function renderQueue() {
+  const list = $("caseList");
+  list.innerHTML = "";
+  state.queue.forEach((item, index) => {
+    const key = `${item.id}__${$("readerSelect").value}`;
+    const isCurrent = index === state.currentIndex;
+    const isDone = state.records.has(key);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    const isDraft = !isDone && state.drafts.has(key);
+    btn.className = ["case-chip", isCurrent ? "current" : "", isDone ? "done" : isDraft ? "draft" : "todo"].filter(Boolean).join(" ");
+    btn.innerHTML = `<span>${index + 1}. ${escapeHtml(item.patientId)}</span><small>${isDone ? "已保存" : isDraft ? "编辑中" : "未评分"}</small>`;
+    btn.addEventListener("click", () => {
+      stashDraft();
+      state.currentIndex = index;
+      loadCurrentIfSaved();
+      renderAll();
+    });
+    list.appendChild(btn);
+  });
+  const done = state.queue.filter((item) => state.records.has(`${item.id}__${$("readerSelect").value}`)).length;
+  $("progressText").textContent = `${done}/${state.queue.length} 已评分`;
+}
+
+function renderCurrentCase() {
+  const item = currentCase();
+  $("currentCaseText").textContent = item ? `${state.currentIndex + 1}/${state.queue.length}：${item.patientId}` : "未选择";
+  $("caseExtraText").textContent = item && item.extras.length ? `附加信息：${item.extras.join(" | ")}` : "无附加信息";
+}
+
+function renderRecords() {
+  const body = $("recordsBody");
+  body.innerHTML = "";
+  const records = [...state.records.values()];
+  $("savedCount").textContent = `${records.length} 条`;
+  if (!records.length) {
+    body.innerHTML = `<tr><td colspan="6" class="empty">还没有保存评分。</td></tr>`;
+    return;
+  }
+  records.forEach((record) => {
+    const tr = document.createElement("tr");
+    tr.className = "saved-row";
+    tr.innerHTML = `
+      <td>${escapeHtml(record.patientId)}</td>
+      <td>${record.reader}</td>
+      <td>${record.dpeiTotal} / ${record.dpeiGrade}</td>
+      <td><code>${escapeHtml(record.standardEnzian)}</code></td>
+      <td><span class="status-done">已保存</span></td>
+      <td><button type="button" data-copy="${record.key}">复制</button></td>
+    `;
+    body.appendChild(tr);
+  });
+  body.querySelectorAll("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", () => copyRecords([state.records.get(btn.dataset.copy)]));
+  });
+}
+
+function renderScoring() {
+  renderDpei();
+  renderEnzian();
+  renderFItems();
+  updateDpeiScore();
+  renderStandard();
+  $("totalNote").value = state.totalNote;
+}
+
+function renderAll() {
+  renderCurrentCase();
+  renderQueue();
+  renderScoring();
+  renderRecords();
+}
+
+function outputColumns() {
+  const reader = $("readerSelect").value;
+  const cols = [
     "患者ID",
     "阅片者",
     "病例附加信息",
@@ -11,16 +1411,19 @@
   cols.push(`Enzian_standard_${reader}`, `Enzian_custom_F_${reader}`, `总备注_${reader}`);
   return cols;
 }
+
 function enzianValue(record, code) {
   if (record.enzianPaired[code]) return `${record.enzianPaired[code].left}/${record.enzianPaired[code].right}`;
   return record.enzianSingle[code] || "0";
 }
+
 function fValue(record, code) {
   const item = record.fItems[code];
   if (!item) return "";
   if (item.mode === "paired") return `${item.left}/${item.right}`;
   return item.value;
 }
+
 function recordRow(record) {
   const row = [record.patientId, record.reader, record.caseExtras.join(" | ")];
   dpeiRegions.forEach(([key]) => row.push(record.dpei[key] ?? ""));
@@ -31,11 +1434,13 @@ function recordRow(record) {
   row.push(record.standardEnzian, record.customF || "", record.totalNote || "");
   return row;
 }
+
 function tsv(rows) {
   return rows
     .map((row) => row.map((cell) => String(cell ?? "").replace(/\t/g, " ").replace(/\r?\n/g, " ")).join("\t"))
     .join("\n");
 }
+
 async function copyText(text) {
   try {
     await navigator.clipboard.writeText(text);
@@ -49,6 +1454,7 @@ async function copyText(text) {
   }
   alert("已复制，可以直接粘贴到 Excel。");
 }
+
 function copyRecords(records) {
   const valid = records.filter(Boolean);
   if (!valid.length) {
@@ -59,18 +1465,22 @@ function copyRecords(records) {
   if ($("includeHeader").checked) rows.unshift(outputColumns());
   copyText(tsv(rows));
 }
+
 function copyCurrent() {
   const record = saveCurrent();
   if (record) copyRecords([record]);
 }
+
 function copyScored() {
   copyRecords([...state.records.values()]);
 }
+
 function isTypingTarget(target) {
   if (!target) return false;
   const tag = target.tagName;
   return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target.isContentEditable;
 }
+
 function handleKeydown(event) {
   if (event.ctrlKey && event.key.toLowerCase() === "s") {
     event.preventDefault();
@@ -92,6 +1502,7 @@ function handleKeydown(event) {
     go(1);
   }
 }
+
 function handleMouseDown(event) {
   if (event.button !== 1 || isTypingTarget(event.target)) return;
   const main = document.querySelector("main");
@@ -99,6 +1510,7 @@ function handleMouseDown(event) {
   event.preventDefault();
   saveCurrentAndNext();
 }
+
 function escapeHtml(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -106,6 +1518,7 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 }
+
 function bind() {
   $("loadQueueBtn").addEventListener("click", loadQueue);
   $("prevBtn").addEventListener("click", () => go(-1));
@@ -127,8 +1540,10 @@ function bind() {
   document.addEventListener("keydown", handleKeydown);
   document.addEventListener("mousedown", handleMouseDown);
 }
+
 bind();
 renderAll();
+
   </script>
 </body>
 </html>
