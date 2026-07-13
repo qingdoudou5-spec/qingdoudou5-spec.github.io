@@ -255,6 +255,7 @@ textarea { resize: vertical; }
 
 .score-card {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: .5rem;
   background: var(--blue-pale);
@@ -267,6 +268,23 @@ textarea { resize: vertical; }
   color: var(--blue);
   font-size: 1.7rem;
   line-height: 1;
+}
+
+.score-breakdown {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  margin-left: .2rem;
+  padding-left: .65rem;
+  border-left: 1px solid #bfd2e4;
+  color: #5b7083;
+  font-size: .78rem;
+  white-space: nowrap;
+}
+
+.score-breakdown b {
+  color: var(--blue);
+  font-size: .88rem;
 }
 
 .dpei-area {
@@ -715,6 +733,9 @@ th {
           <span>dPEI 总分</span>
           <strong id="dpeiTotal">0</strong>
           <span id="dpeiGrade">轻度</span>
+          <span class="score-breakdown" aria-label="dPEI计分构成">
+            区域 <b id="dpeiRegionTotal">0</b> + 附加 <b id="dpeiExtraTotal">0</b>
+          </span>
         </div>
       </div>
       <div class="dpei-area">
@@ -901,8 +922,16 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-function dpeiTotal() {
+function dpeiRegionTotal() {
   return dpeiRegions.reduce((sum, [key]) => sum + Number(state.dpei[key] || 0), 0);
+}
+
+function dpeiExtraTotal() {
+  return dpeiExtras.reduce((sum, [key]) => sum + Number(state.dpei[key] || 0), 0);
+}
+
+function dpeiTotal() {
+  return dpeiRegionTotal() + dpeiExtraTotal();
 }
 
 function dpeiGrade(total) {
@@ -1009,14 +1038,19 @@ function renderDpei() {
     btn.addEventListener("click", () => {
       state.dpei[key] = state.dpei[key] ? 0 : 1;
       renderDpei();
+      updateDpeiScore();
     });
     extras.appendChild(btn);
   });
 }
 
 function updateDpeiScore() {
-  const total = dpeiTotal();
+  const regionTotal = dpeiRegionTotal();
+  const extraTotal = dpeiExtraTotal();
+  const total = regionTotal + extraTotal;
   $("dpeiTotal").textContent = String(total);
+  $("dpeiRegionTotal").textContent = String(regionTotal);
+  $("dpeiExtraTotal").textContent = String(extraTotal);
   $("dpeiGrade").textContent = dpeiGrade(total);
 }
 
